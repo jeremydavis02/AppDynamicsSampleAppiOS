@@ -9,4 +9,4 @@ target 'AppDSampleAppiOSUITests' do
   pod 'WiremockClient'
 end
 
-
+pod 'AppDynamicsAgent'

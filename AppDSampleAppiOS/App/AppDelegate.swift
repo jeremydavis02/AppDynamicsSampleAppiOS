@@ -54,18 +54,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Option 2: Advanced option, showing configuration
 
         // Change this to the App Key provided for your account.
-        let config = ADEumAgentConfiguration(appKey: "ABC-DEF-GHI")
+        let config = ADEumAgentConfiguration(appKey: "AD-AAB-ADF-UWF")
 
-        // Change this URL to the one provided for your account.
-        // To try it locally with no collector, use localhost.
-        config.collectorURL = "http://localhost:9001"
-        
-        // Change this URL to the one provided for your account.
-        config.screenshotURL = "http://localhost:9001"
-        config.loggingLevel = .all
-        config.screenshotsEnabled = true // true is default, so this line is optional
-        config.anrDetectionEnabled = true
+        // Configure the iOS Agent to report the metrics and screenshots
+
+        // to the SaaS EUM Server in Americas
+        config.collectorURL = "https://col.eum-appdynamics.com "
+        config.screenshotURL = "https://image.eum-appdynamics.com "
         ADEumInstrumentation.initWith(config)
+        ADEumInstrumentation.setUserData("Awesome Architect", value: "Jeremy")
+        ADEumInstrumentation.setUserDataBoolean("isAwesome", value: true)
+        ADEumInstrumentation.setUserDataLong("Ranking", value: 1)
+        ADEumInstrumentation.setUserDataDouble("Satisfaction Level", value: 100.00)
+        ADEumInstrumentation.setUserDataDate("Date of Awesome", value: Date())
         // end example
 
         // Example: Excluded URL patterns

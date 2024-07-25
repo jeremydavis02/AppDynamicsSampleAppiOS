@@ -1,0 +1,6 @@
+framework module WiremockClient {
+  umbrella header "WiremockClient-umbrella.h"
+
+  export *
+  module * { export * }
+}

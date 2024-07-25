@@ -82,6 +82,7 @@ class Model {
     }()
 
     func prepareData() -> [Category] {
+        
         let data = [
         Category(name: "Features",
                  title: "Features",

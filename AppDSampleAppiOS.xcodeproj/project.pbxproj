@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -282,8 +282,9 @@
 		520A1AEE261626020052EDC5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = AppDynamics;
 				TargetAttributes = {
 					520A1AF5261626020052EDC5 = {
@@ -354,7 +355,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nreadonly MOCKSERVER_PORT=9001\nreadonly MOCKSERVER_DIR=\"${SRCROOT}/AppDSampleAppiOSUITests/WireMock\"\n\necho \"Checking for anything on port: ${MOCKSERVER_PORT}\"\n# Check for anything on the port\nif MOCKSERVER_LSOF=$(lsof -n -i:${MOCKSERVER_PORT}); then\n    OLD_PID=$(echo ${MOCKSERVER_LSOF} | awk '{ print $11 }')\n    if ps ${OLD_PID} | grep 'wiremock'; then\n        echo \"The wiremock mockserver already running on port: ${MOCKSERVER_PORT}\"\n    else\n        echo \"port ${MOCKSERVER_PORT} is taken by process ${OLD_PID}\"\n        exit 1 # terminate and indicate error\n    fi\nfi\n\nreadonly MOCKSERVER_JAR=\"$(find ${MOCKSERVER_DIR} -name \"*.jar\")\"\n\necho \"Starting mockserver...\"\nnohup java -jar ${MOCKSERVER_JAR} --port 9001 --root-dir ${MOCKSERVER_DIR} > mockserver-output.log 2>&1 &\n\nif lsof -Pi :${MOCKSERVER_PORT} -sTCP:LISTEN -t >/dev/null ; then\n    echo \"Mockserver is running; proceeding with tests\"\nelse\n    sleep 5\nfi\n\necho \"Printing output for mock server when started\"\ncat mockserver-output.log\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n\nexport ADRUM_ACCOUNT_NAME=\"AppdynamicsIncparenta0Q2H00000JOPsNUAX\"\n\nexport ADRUM_LICENSE_KEY=\"7891a6fa-bc0d-4e3c-8f32-e690aad378b7\"\n\nexport ADRUM_EUM_PROCESSOR=\"https://api.eum-appdynamics.com\"\n\nSCRIPT=`/usr/bin/find \"${SRCROOT}\" -name xcode_build_dsym_upload.sh | head -n 1`\n\n/bin/sh \"${SCRIPT}\"\n\n\n\nreadonly MOCKSERVER_PORT=9001\nreadonly MOCKSERVER_DIR=\"${SRCROOT}/AppDSampleAppiOSUITests/WireMock\"\n\necho \"Checking for anything on port: ${MOCKSERVER_PORT}\"\n# Check for anything on the port\nif MOCKSERVER_LSOF=$(lsof -n -i:${MOCKSERVER_PORT}); then\n    OLD_PID=$(echo ${MOCKSERVER_LSOF} | awk '{ print $11 }')\n    if ps ${OLD_PID} | grep 'wiremock'; then\n        echo \"The wiremock mockserver already running on port: ${MOCKSERVER_PORT}\"\n    else\n        echo \"port ${MOCKSERVER_PORT} is taken by process ${OLD_PID}\"\n        exit 1 # terminate and indicate error\n    fi\nfi\n\nreadonly MOCKSERVER_JAR=\"$(find ${MOCKSERVER_DIR} -name \"*.jar\")\"\n\necho \"Starting mockserver...\"\nnohup java -jar ${MOCKSERVER_JAR} --port 9001 --root-dir ${MOCKSERVER_DIR} > mockserver-output.log 2>&1 &\n\nif lsof -Pi :${MOCKSERVER_PORT} -sTCP:LISTEN -t >/dev/null ; then\n    echo \"Mockserver is running; proceeding with tests\"\nelse\n    sleep 5\nfi\n\necho \"Printing output for mock server when started\"\ncat mockserver-output.log\n";
 		};
 		44C26411F4B944290B280CB5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -490,6 +491,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -520,9 +522,10 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -537,7 +540,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -551,6 +554,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -584,6 +588,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -592,7 +597,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

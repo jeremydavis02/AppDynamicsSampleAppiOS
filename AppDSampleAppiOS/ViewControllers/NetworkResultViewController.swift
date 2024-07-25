@@ -3,6 +3,7 @@
 //  AppDSampleAppiOS
 
 import UIKit
+import ADEUMInstrumentation
 
 class NetworkResultViewController: GenericLabelViewController {
 
@@ -36,6 +37,8 @@ class NetworkResultViewController: GenericLabelViewController {
     
     func makeNetworkCall(request: URLRequest) {
         
+        let timerName = "Network Call"
+        ADEumInstrumentation.startTimer(withName: timerName)
         guard let method = request.httpMethod else { return }
 
         let config = URLSessionConfiguration.ephemeral
@@ -68,10 +71,11 @@ class NetworkResultViewController: GenericLabelViewController {
                     self.revealWhatNext()
                 }
             }
+            ADEumInstrumentation.reportMetric(withName: "Network Response Size", value: response!.expectedContentLength) 
         })
         task.resume()
         session.finishTasksAndInvalidate()
-        
+        ADEumInstrumentation.stopTimer(withName: timerName)
     }
     
     func networkRequest(for url: URL, method: String) -> URLRequest {

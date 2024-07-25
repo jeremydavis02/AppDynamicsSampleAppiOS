@@ -4,6 +4,7 @@
 
 import Foundation
 import SwiftUI
+import ADEUMInstrumentation
 
 final class CodePopoverViewController: UIHostingController<CodePopoverView> {
     
@@ -19,8 +20,10 @@ final class CodePopoverViewController: UIHostingController<CodePopoverView> {
         rootView.snippet = snippet
     }
     
-    func dismiss() {
+    @objc func dismiss() {
+        let tracker = ADEumInstrumentation.beginCall(self, selector: #selector(self.dismiss(animated:completion:)))
         dismiss(animated: true, completion: nil)
+        ADEumInstrumentation.endCall(tracker)
     }
 }
 
