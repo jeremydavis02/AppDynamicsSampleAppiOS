@@ -61,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // to the SaaS EUM Server in Americas
         config.collectorURL = "https://col.eum-appdynamics.com "
         config.screenshotURL = "https://image.eum-appdynamics.com "
+        config.interactionCaptureMode = ADEumInteractionCaptureMode.ADEumInteractionCaptureModeAll
         ADEumInstrumentation.initWith(config)
         ADEumInstrumentation.setUserData("Awesome Architect", value: "Jeremy")
         ADEumInstrumentation.setUserDataBoolean("isAwesome", value: true)
