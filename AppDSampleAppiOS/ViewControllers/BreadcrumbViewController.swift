@@ -111,14 +111,14 @@ class BreadcrumbViewController: GenericLabelViewController, CLLocationManagerDel
         // which gets sent upon end of session or after
         // any crash.
         // Check if we have a location available
-                if let location = locationManager.location {
-                    let latitude = location.coordinate.latitude
-                    let longitude = location.coordinate.longitude
-                    let breadcrumbMessage = "sample2 (lat: \(latitude), lon: \(longitude))"
-                    ADEumInstrumentation.leaveBreadcrumb(breadcrumbMessage, mode: .crashesAndSessions)
-                } else {
-                    ADEumInstrumentation.leaveBreadcrumb("sample2 (No location yet)", mode: .crashesAndSessions)
-                }
+        if let location = locationManager.location {
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
+            let breadcrumbMessage = "sample2 (lat: \(latitude), lon: \(longitude))"
+            ADEumInstrumentation.leaveBreadcrumb(breadcrumbMessage, mode: .crashesAndSessions)
+        } else {
+            ADEumInstrumentation.leaveBreadcrumb("sample2 (No location yet)", mode: .crashesAndSessions)
+        }
 
 
         // end example

@@ -4,6 +4,7 @@
 
 import UIKit
 import ADEUMInstrumentation
+import CoreLocation
 
 /**
   AppDynamics iOS Sample App
@@ -26,8 +27,39 @@ import ADEUMInstrumentation
 **/
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
+    let locationManager = CLLocationManager() // Create a location manager
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+                switch manager.authorizationStatus {
+                case .authorizedWhenInUse, .authorizedAlways:
+                    // Start updating location
+                    locationManager.startUpdatingLocation()
+                case .denied, .restricted:
+                    // Handle the case where location services are not authorized
+                    print("Location services not authorized.")
+                default:
+                    break
+                }
+            }
+        
+        // CLLocationManagerDelegate function to handle location updates
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            if let location = locations.last {
+                let latitude = location.coordinate.latitude
+                let longitude = location.coordinate.longitude
+                ADEumInstrumentation.setUserDataDouble("Latitude", value: latitude)
+                ADEumInstrumentation.setUserDataDouble("Longitude", value: longitude)
+            } else {
+                let no_location_error = NSError(domain: "", code: 100, userInfo: [NSLocalizedDescriptionKey: "No location available yet"])
+                ADEumInstrumentation.reportError(no_location_error, withSeverity: .info)
+            }
+        }
+        
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            ADEumInstrumentation.reportError(error, withSeverity: .warning)
+        }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         printLog("Lifecycle event: didFinishLaunchingWithOptions")
@@ -68,6 +100,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ADEumInstrumentation.setUserDataLong("Ranking", value: 1)
         ADEumInstrumentation.setUserDataDouble("Satisfaction Level", value: 100.00)
         ADEumInstrumentation.setUserDataDate("Date of Awesome", value: Date())
+        // Request location authorization
+        locationManager.requestWhenInUseAuthorization()
+        
+        // Set up location manager
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization() // Request location permission
+        locationManager.startUpdatingLocation()
+        // Check if we have a location available
+        if let location = locationManager.location {
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
+            ADEumInstrumentation.setUserDataDouble("Latitude", value: latitude)
+            ADEumInstrumentation.setUserDataDouble("Longitude", value: longitude)
+        } else {
+            let no_location_error = NSError(domain: "", code: 100, userInfo: [NSLocalizedDescriptionKey: "No location available yet"])
+            ADEumInstrumentation.reportError(no_location_error, withSeverity: .info)
+        }
+
         // end example
 
         // Example: Excluded URL patterns
