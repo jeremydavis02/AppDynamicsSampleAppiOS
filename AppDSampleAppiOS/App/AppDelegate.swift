@@ -116,7 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             ADEumInstrumentation.setUserDataDouble("Longitude", value: longitude)
         } else {
             let no_location_error = NSError(domain: "", code: 100, userInfo: [NSLocalizedDescriptionKey: "No location available yet"])
-            ADEumInstrumentation.reportError(no_location_error, withSeverity: .info)
+            ADEumInstrumentation.reportError(no_location_error, withSeverity: .info, andStackTrace: false)
         }
 
         // end example
